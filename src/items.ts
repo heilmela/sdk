@@ -240,31 +240,33 @@ export type Aggregate = {
 
 export type Sort<T> = (`${Extract<keyof SingleItem<T>, string>}` | `-${Extract<keyof SingleItem<T>, string>}`)[];
 
+type AugmentedFilterOperator<T> = T | string;
+
 export type FilterOperators<T> = {
-	_eq?: T;
-	_neq?: T;
-	_gt?: T;
-	_gte?: T;
-	_lt?: T;
-	_lte?: T;
-	_in?: T[];
-	_nin?: T[];
-	_between?: [T, T];
-	_nbetween?: [T, T];
-	_contains?: T;
-	_ncontains?: T;
-	_starts_with?: T;
-	_nstarts_with?: T;
-	_ends_with?: T;
-	_nends_with?: T;
+	_eq?: T extends Date ? AugmentedFilterOperator<T> : T;
+	_neq?: T extends Date ? AugmentedFilterOperator<T> : T;
+	_gt?: T extends Date ? AugmentedFilterOperator<T> : T;
+	_gte?: T extends Date ? AugmentedFilterOperator<T> : T;
+	_lt?: T extends Date ? AugmentedFilterOperator<T> : T;
+	_lte?: T extends Date ? AugmentedFilterOperator<T> : T;
+	_in?: T extends Date ? AugmentedFilterOperator<T> : T[];
+	_nin?: T extends Date ? AugmentedFilterOperator<T> : T[];
+	_between?: [T extends Date ? AugmentedFilterOperator<T> : T, T extends Date ? AugmentedFilterOperator<T> : T];
+	_nbetween?: [T extends Date ? AugmentedFilterOperator<T> : T, T extends Date ? AugmentedFilterOperator<T> : T];
+	_contains?: T extends Date ? AugmentedFilterOperator<T> : T;
+	_ncontains?: T extends Date ? AugmentedFilterOperator<T> : T;
+	_starts_with?: T extends Date ? AugmentedFilterOperator<T> : T;
+	_nstarts_with?: T extends Date ? AugmentedFilterOperator<T> : T;
+	_ends_with?: T extends Date ? AugmentedFilterOperator<T> : T;
+	_nends_with?: T extends Date ? AugmentedFilterOperator<T> : T;
 	_empty?: boolean;
 	_nempty?: boolean;
 	_nnull?: boolean;
 	_null?: boolean;
-	_intersects?: T;
-	_nintersects?: T;
-	_intersects_bbox?: T;
-	_nintersects_bbox?: T;
+	_intersects?: T extends Date ? AugmentedFilterOperator<T> : T;
+	_nintersects?: T extends Date ? AugmentedFilterOperator<T> : T;
+	_intersects_bbox?: T extends Date ? AugmentedFilterOperator<T> : T;
+	_nintersects_bbox?: T extends Date ? AugmentedFilterOperator<T> : T;
 };
 
 export type LogicalFilterAnd<T> = { _and: Filter<T>[] };
